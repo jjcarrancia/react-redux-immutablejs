@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { CheckListItem, CheckList } from '../js/constants';
-import { Card, Input, List, Button } from 'semantic-ui-react';
+import { Container, Card, Input, Button } from 'semantic-ui-react';
 import { CheckListActions } from '../js/actions';
-
-const { addItem } = CheckListActions;
+import ItemList from '../components/ItemList.react';
+const { addItem, removeItem, checkItem } = CheckListActions;
 
 interface StateProps {
   itemList: CheckList;
@@ -12,6 +12,8 @@ interface StateProps {
 
 interface DispatchProps {
   addItem: (item: CheckListItem) => any;
+  removeItem: (item: CheckListItem) => any;
+  checkItem: (item: CheckListItem) => any;
 }
 
 interface Props extends StateProps, DispatchProps {}
@@ -26,6 +28,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   addItem,
+  removeItem,
+  checkItem,
 };
 
 class Main extends React.Component<Props, State> {
@@ -48,29 +52,27 @@ class Main extends React.Component<Props, State> {
   }
 
   render() {
-    const { itemList } = this.props;
+    const { itemList, removeItem, checkItem } = this.props;
     const { inputValue } = this.state;
     return (
-      <Card>
-        <Card.Header textAlign="center">{itemList.get('name')}</Card.Header>
-        {itemList.get('collection').isEmpty() ? null : (
-          <Card.Content>
-            <List>
-              {itemList.get('collection').map((item, idx) => {
-                return <List.Item key={idx}>{item.get('name')}</List.Item>;
-              })}
-            </List>
-          </Card.Content>
-        )}
-        <Card.Content extra>
-          <Input
-            placeholder="Type here..."
-            onChange={(event, value) => this.handleChange(event, value)}
-            value={inputValue}
+      <Container>
+        <Card centered>
+          <Card.Header textAlign="center">{itemList.get('name')}</Card.Header>
+          <ItemList
+            itemList={itemList}
+            handleRemove={removeItem}
+            handleCheckItem={checkItem}
           />
-          <Button onClick={() => this.handleSubmit()}>Add item</Button>
-        </Card.Content>
-      </Card>
+          <Card.Content extra>
+            <Input
+              placeholder="Type here..."
+              onChange={(event, value) => this.handleChange(event, value)}
+              value={inputValue}
+            />
+            <Button onClick={() => this.handleSubmit()}>Add item</Button>
+          </Card.Content>
+        </Card>
+      </Container>
     );
   }
 }

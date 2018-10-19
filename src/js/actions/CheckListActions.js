@@ -10,6 +10,8 @@ const CheckListActions = {
   addItem(item: CheckListItem) {
     return { type: ActionTypes.ADD_ITEM, payload: item };
   },
+  removeItem(item: CheckListItem) {},
+  checkItem(item: CheckListItem) {},
 };
 
 export { CheckListActions, ActionTypes };
