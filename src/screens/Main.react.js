@@ -4,7 +4,7 @@ import { CheckListItem, CheckList } from '../js/constants';
 import { Container, Card, Input, Button } from 'semantic-ui-react';
 import { CheckListActions } from '../js/actions';
 import ItemList from '../components/ItemList.react';
-const { addItem, removeItem, checkItem } = CheckListActions;
+const { addItem, removeItem, toggleItem } = CheckListActions;
 
 interface StateProps {
   itemList: CheckList;
@@ -12,8 +12,8 @@ interface StateProps {
 
 interface DispatchProps {
   addItem: (item: CheckListItem) => any;
-  removeItem: (item: CheckListItem) => any;
-  checkItem: (item: CheckListItem) => any;
+  removeItem: (index: number) => any;
+  toggleItem: (index: number) => any;
 }
 
 interface Props extends StateProps, DispatchProps {}
@@ -29,7 +29,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   addItem,
   removeItem,
-  checkItem,
+  toggleItem,
 };
 
 class Main extends React.Component<Props, State> {
@@ -52,7 +52,7 @@ class Main extends React.Component<Props, State> {
   }
 
   render() {
-    const { itemList, removeItem, checkItem } = this.props;
+    const { itemList, removeItem, toggleItem } = this.props;
     const { inputValue } = this.state;
     return (
       <Container>
@@ -61,7 +61,7 @@ class Main extends React.Component<Props, State> {
           <ItemList
             itemList={itemList}
             handleRemove={removeItem}
-            handleCheckItem={checkItem}
+            handleToggleItem={toggleItem}
           />
           <Card.Content extra>
             <Input

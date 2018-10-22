@@ -3,6 +3,8 @@ import { CheckListItem } from '../constants/ListItemImmutables';
 
 const ActionTypes = keyMirror({
   ADD_ITEM: null,
+  REMOVE_ITEM: null,
+  TOGGLE_ITEM: null,
 });
 
 const CheckListActions = {
@@ -10,8 +12,12 @@ const CheckListActions = {
   addItem(item: CheckListItem) {
     return { type: ActionTypes.ADD_ITEM, payload: item };
   },
-  removeItem(item: CheckListItem) {},
-  checkItem(item: CheckListItem) {},
+  removeItem(index: number) {
+    return { type: ActionTypes.REMOVE_ITEM, payload: index };
+  },
+  toggleItem(index: number) {
+    return { type: ActionTypes.TOGGLE_ITEM, payload: index };
+  },
 };
 
 export { CheckListActions, ActionTypes };

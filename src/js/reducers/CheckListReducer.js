@@ -4,11 +4,23 @@ import { ActionTypes } from '../actions/CheckListActions';
 const initialState = new CheckList({ name: 'Item list' });
 
 const CheckListReducer = (state = initialState, action) => {
+  let newList;
   switch (action.type) {
     case ActionTypes.ADD_ITEM:
-      const newList = state
+      newList = state
         .getIn(['collection'])
         .push(new CheckListItem({ name: action.payload }));
+      return state.setIn(['collection'], newList);
+    case ActionTypes.REMOVE_ITEM:
+      newList = state.getIn(['collection']).removeIn([action.payload]);
+      return state.setIn(['collection'], newList);
+    case ActionTypes.TOGGLE_ITEM:
+      newList = state
+        .getIn(['collection'])
+        .update(
+          action.payload,
+          val => new CheckListItem({ name: val.name, checked: !val.checked }),
+        );
       return state.setIn(['collection'], newList);
     default:
       return state;
