@@ -57,7 +57,7 @@ class Main extends React.Component<Props, State> {
     return (
       <Container>
         <Card centered>
-          <Card.Header textAlign="center">{itemList.get('name')}</Card.Header>
+          <Card.Header textAlign="center">{itemList.name}</Card.Header>
           <ItemList
             itemList={itemList}
             handleRemove={removeItem}

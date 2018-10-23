@@ -11,19 +11,19 @@ interface Props {
 const ItemList = (props: Props) => {
   const { itemList, handleRemove, handleToggleItem } = props;
 
-  return itemList.get('collection').isEmpty() ? null : (
+  return itemList.collection.isEmpty() ? null : (
     <Card.Content>
       <List>
         <Grid>
-          {itemList.get('collection').map((item, idx) => {
+          {itemList.collection.map((item, idx) => {
             return (
               <React.Fragment key={idx}>
                 <Grid.Column width={12}>
                   <Checkbox
                     as={List.Item}
-                    label={item.get('name')}
+                    label={item.name}
                     onChange={() => handleToggleItem(idx)}
-                    checked={item.get('checked')}
+                    checked={item.checked}
                   />
                 </Grid.Column>
                 <Grid.Column width={4}>
